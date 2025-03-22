@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>热门新闻</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>热门新闻</h1>
+            <div id="weather-container">
+                <div id="loading-weather">加载天气信息中...</div>
+                <div id="weather-info" class="hidden">
+                    <span id="location"></span>
+                    <span id="weather-icon"></span>
+                    <span id="temperature"></span>
+                    <span id="weather-desc"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="news-categories">
+            <button class="category-btn active" data-category="general">综合</button>
+            <button class="category-btn" data-category="technology">科技</button>
+            <button class="category-btn" data-category="business">财经</button>
+            <button class="category-btn" data-category="entertainment">娱乐</button>
+            <button class="category-btn" data-category="sports">体育</button>
+        </div>
+
+        <div id="news-container">
+            <div id="loading-news">加载新闻中...</div>
+            <div id="news-cards" class="hidden"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-simple">
+                <p>© 2025 TOPNES · QZZ</p>
+                <div class="footer-links-simple">
+                    <a href="#">关于</a>
+                    <a href="#">隐私</a>
+                    <a href="#">反馈</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
