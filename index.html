@@ -3,27 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="热门新闻聚合器 - 头条、百度、微博、知乎热榜一站汇聚">
     <title>热门新闻</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>热门新闻</h1>
-            <div id="weather-container">
-                <div id="loading-weather">加载天气信息中...</div>
-                <div id="weather-info" class="hidden">
-                    <span id="location"></span>
-                    <span id="weather-icon"></span>
-                    <span id="temperature"></span>
-                    <span id="weather-desc"></span>
+        <div class="container header-content">
+            <div class="header-left">
+                <h1><i class="fas fa-fire-alt"></i> 热门新闻</h1>
+                <span id="data-source-badge" class="badge badge-demo">✦ 演示数据</span>
+            </div>
+            <div class="header-right">
+                <div id="weather-container">
+                    <div id="loading-weather">加载天气中...</div>
+                    <div id="weather-info" class="hidden">
+                        <span id="weather-icon"></span>
+                        <span id="location"></span>
+                        <span id="temperature"></span>
+                        <span id="weather-desc"></span>
+                    </div>
                 </div>
+                <button id="theme-toggle" class="icon-btn" title="切换主题">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </div>
     </header>
 
     <main class="container">
+        <div class="source-tabs">
+            <button class="source-btn active" data-source="toutiao"><i class="fas fa-fire"></i> 头条</button>
+            <button class="source-btn" data-source="baidu"><i class="fas fa-search"></i> 百度</button>
+            <button class="source-btn" data-source="weibo"><i class="fas fa-hashtag"></i> 微博</button>
+            <button class="source-btn" data-source="zhihu"><i class="fas fa-lightbulb"></i> 知乎</button>
+        </div>
+
         <div class="news-categories">
             <button class="category-btn active" data-category="general">综合</button>
             <button class="category-btn" data-category="technology">科技</button>
@@ -33,7 +49,7 @@
         </div>
 
         <div id="news-container">
-            <div id="loading-news">加载新闻中...</div>
+            <div id="loading-news"></div>
             <div id="news-cards" class="hidden"></div>
         </div>
     </main>
@@ -53,4 +69,4 @@
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
