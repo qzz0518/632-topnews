@@ -164,79 +164,20 @@ async function fetchNews(category) {
         newsCards.classList.add('hidden');
         loadingNews.classList.remove('hidden');
         
-        // 使用模拟数据代替API调用
-        const mockData = [
-            {
-                id: '1',
-                title: '人工智能技术取得重大突破，新型AI芯片性能提升10倍',
-                cover: 'https://picsum.photos/400/250?random=1',
-                hot: 125000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            },
-            {
-                id: '2',
-                title: '5G网络全面覆盖，互联网速度再创新高',
-                cover: 'https://picsum.photos/400/250?random=2',
-                hot: 98000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            },
-            {
-                id: '3',
-                title: '股市今日大涨，科技股领涨市场',
-                cover: 'https://picsum.photos/400/250?random=3',
-                hot: 87000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            },
-            {
-                id: '4',
-                title: '热门电影票房破纪录，观众反响热烈',
-                cover: 'https://picsum.photos/400/250?random=4',
-                hot: 76000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            },
-            {
-                id: '5',
-                title: '篮球比赛精彩纷呈，主队获得胜利',
-                cover: 'https://picsum.photos/400/250?random=5',
-                hot: 65000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            },
-            {
-                id: '6',
-                title: '新款智能手机发布，搭载最新科技',
-                cover: 'https://picsum.photos/400/250?random=6',
-                hot: 54000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            },
-            {
-                id: '7',
-                title: '经济数据向好，投资者信心增强',
-                cover: 'https://picsum.photos/400/250?random=7',
-                hot: 43000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            },
-            {
-                id: '8',
-                title: '音乐节盛大开幕，明星云集',
-                cover: 'https://picsum.photos/400/250?random=8',
-                hot: 32000,
-                url: '#',
-                timestamp: Date.now() * 1000000
-            }
-        ];
+        // 使用CORS代理获取今日头条API数据
+        const proxyUrl = `${CORS_PROXY}${encodeURIComponent(`${NEWS_API_URL}?key=${NEWS_API_KEY}`)}`;
+        const response = await fetch(proxyUrl);
+        const data = await response.json();
+        
+        if (data.code !== 200 || !data.data || !Array.isArray(data.data)) {
+            throw new Error('获取新闻失败');
+        }
         
         // 保存所有新闻数据
-        allNewsData = mockData;
+        allNewsData = data.data;
         
         // 根据选择的分类过滤或显示所有新闻
-        let filteredNews = filterNewsByCategory(mockData, category);
+        let filteredNews = filterNewsByCategory(data.data, category);
         
         // 更新新闻UI
         updateNewsUI(filteredNews);
