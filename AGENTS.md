@@ -16,7 +16,7 @@ Then open `http://localhost:8080/` in a browser.
 
 ### Key notes
 
-- The app fetches news from the Toutiao API (`whyta.cn/api/toutiao`) via a CORS proxy (`corsproxy.io`). In sandboxed environments without internet access to these services, the news feed will show "获取新闻失败" (fetch failed). This is expected and not a code bug.
-- Weather data uses hardcoded mock data (Beijing, 22°C, Sunny) rather than live API calls.
+- The app supports 4 news sources (头条热榜, 百度热搜, 微博热搜, 知乎热榜) via the vvhan API (`api.vvhan.com`), with CORS proxy fallback and built-in mock data. In sandboxed/offline environments, it automatically degrades to demo data and shows a "✦ 演示数据" badge. This is by design.
+- Weather data uses hardcoded mock data (Beijing, 22°C, Sunny).
+- Dark mode state and favorites are stored in `localStorage`.
 - There is no linting, no automated tests, and no build step — the project is purely static files.
-- Favorites are stored in `localStorage` and persist across page reloads.
