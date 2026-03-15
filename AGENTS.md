@@ -2,19 +2,26 @@
 
 ## Cursor Cloud specific instructions
 
-This is a pure static HTML/CSS/JS web app (Chinese Hot News Aggregator) with **no package manager, no build step, no test framework, and no linter**.
+This is a **Vite + vanilla JS** news aggregator with an industrial panel UI. It uses **pnpm** as the package manager.
 
 ### Running the dev server
 
 ```bash
-python3 -m http.server 8080
+pnpm dev
 ```
 
-Then open `http://localhost:8080/` in the browser. There is no hot-reload; refresh the page after editing files.
+The app runs at `http://localhost:5173/`. Vite provides hot module replacement.
+
+### Build
+
+```bash
+pnpm build
+```
 
 ### Key caveats
 
-- **No automated tests or lint checks exist.** All validation must be done manually via the browser.
-- **News data depends on external APIs** (`whyta.cn` via `corsproxy.io` CORS proxy). These may be unreachable from the cloud VM due to network restrictions. The app gracefully shows "获取新闻失败，请稍后再试" when the API is unavailable.
-- **Weather uses hardcoded mock data** (Beijing, 22°C, sunny) — the `fetchWeather()` function never calls the real OpenWeatherMap API.
-- **No `package.json`** — do not attempt `npm install` or similar.
+- **No test framework or linter is configured.** All validation is manual via the browser.
+- **News data comes from external RSS/API sources** proxied through Vite's dev server (see `vite.config.js` for proxy rules). The Vite proxy handles CORS. Sources: NHK (Japan), BBC (UK), CNN (US), Toutiao (China).
+- **Mock/fallback data** is built into `src/main.js` — if any external source fails, the app gracefully falls back to sample headlines.
+- **esbuild build scripts must be approved** — `pnpm.onlyBuiltDependencies` in `package.json` already allows esbuild.
+- The auto-refresh progress bar re-fetches news every ~30 seconds.

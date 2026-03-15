@@ -1,56 +1,103 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>热门新闻</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>NEWS / TERMINAL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>热门新闻</h1>
-            <div id="weather-container">
-                <div id="loading-weather">加载天气信息中...</div>
-                <div id="weather-info" class="hidden">
-                    <span id="location"></span>
-                    <span id="weather-icon"></span>
-                    <span id="temperature"></span>
-                    <span id="weather-desc"></span>
-                </div>
-            </div>
-        </div>
+
+<main class="device-panel">
+
+    <header class="panel-header">
+        <div class="brand">NEWS / TERMINAL</div>
+        <div class="model-number">SYS.01</div>
     </header>
 
-    <main class="container">
-        <div class="news-categories">
-            <button class="category-btn active" data-category="general">综合</button>
-            <button class="category-btn" data-category="technology">科技</button>
-            <button class="category-btn" data-category="business">财经</button>
-            <button class="category-btn" data-category="entertainment">娱乐</button>
-            <button class="category-btn" data-category="sports">体育</button>
-        </div>
-
-        <div id="news-container">
-            <div id="loading-news">加载新闻中...</div>
-            <div id="news-cards" class="hidden"></div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <div class="footer-simple">
-                <p>© 2025 TOPNES · QZZ</p>
-                <div class="footer-links-simple">
-                    <a href="#">关于</a>
-                    <a href="#">隐私</a>
-                    <a href="#">反馈</a>
-                </div>
+    <!-- CRT Display Screen -->
+    <section class="display-section">
+        <div class="display-screen">
+            <div class="screen-header">
+                <span class="screen-dot" id="screen-dot"></span>
+                <span class="screen-label">LIVE FEED</span>
+                <span class="screen-status" id="feed-status">STANDBY</span>
+            </div>
+            <div class="screen-content" id="news-ticker">
+                <span class="prompt">&gt;</span> Initializing feed...
+            </div>
+            <div class="screen-progress">
+                <div class="progress-fill" id="refresh-progress"></div>
             </div>
         </div>
+    </section>
+
+    <!-- Region Hardware Buttons -->
+    <section class="controls-section">
+        <div class="control-group">
+            <span class="control-label">CN-30</span>
+            <button class="hardware-btn btn-red" data-region="cn" aria-label="China News">
+                <div class="btn-well"><div class="btn-cap"></div></div>
+            </button>
+        </div>
+        <div class="control-group">
+            <span class="control-label">JP-55</span>
+            <button class="hardware-btn btn-blue" data-region="jp" aria-label="Japan News">
+                <div class="btn-well"><div class="btn-cap"></div></div>
+            </button>
+        </div>
+        <div class="control-group">
+            <span class="control-label">US-A9</span>
+            <button class="hardware-btn btn-yellow" data-region="us" aria-label="USA News">
+                <div class="btn-well"><div class="btn-cap"></div></div>
+            </button>
+        </div>
+        <div class="control-group">
+            <span class="control-label">UK-85</span>
+            <button class="hardware-btn btn-green" data-region="uk" aria-label="UK News">
+                <div class="btn-well"><div class="btn-cap"></div></div>
+            </button>
+        </div>
+        <div class="control-group">
+            <span class="control-label">ALL-F4</span>
+            <button class="hardware-btn btn-white is-active" data-region="all" aria-label="All News">
+                <div class="btn-well"><div class="btn-cap"></div></div>
+            </button>
+        </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <section class="category-section">
+        <button class="category-btn active" data-category="all">ALL</button>
+        <button class="category-btn" data-category="tech">TECH</button>
+        <button class="category-btn" data-category="business">BIZ</button>
+        <button class="category-btn" data-category="sports">SPORT</button>
+        <button class="category-btn" data-category="entertainment">ENT</button>
+        <button class="category-btn" data-category="favorite">&#9733; FAV</button>
+    </section>
+
+    <div class="panel-divider"></div>
+
+    <!-- News Feed -->
+    <section class="feed-section">
+        <div class="feed-header">
+            <span class="feed-title">FEED</span>
+            <span class="feed-count" id="feed-count">// 0 ITEMS</span>
+        </div>
+        <div class="feed-grid" id="news-grid">
+            <div class="feed-loading" id="feed-loading">Connecting to data sources...</div>
+        </div>
+    </section>
+
+    <footer class="panel-footer">
+        <div class="footer-text">News-Katalog</div>
+        <div class="model-number">NW-26</div>
     </footer>
 
-    <script src="script.js"></script>
+</main>
+
+<script type="module" src="/src/main.js"></script>
 </body>
-</html> 
+</html>
