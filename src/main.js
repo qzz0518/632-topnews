@@ -71,9 +71,32 @@ let tickerIndex = 0;
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
+  setupThemeToggle();
   setupRegionButtons();
   setupCategoryButtons();
   fetchAllNews();
+}
+
+// ============================================================
+// Theme Toggle
+// ============================================================
+
+function setupThemeToggle() {
+  const initial = localStorage.getItem('newsTerminalTheme')
+    || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  applyTheme(initial);
+
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('newsTerminalTheme', next);
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const label = document.getElementById('theme-label');
+  if (label) label.textContent = theme === 'dark' ? 'DK' : 'LT';
 }
 
 // ============================================================

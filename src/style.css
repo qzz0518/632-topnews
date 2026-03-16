@@ -287,6 +287,78 @@ body {
 .btn-green  { --btn-color: var(--color-green);  --btn-shade: var(--shade-green); }
 .btn-white  { --btn-color: var(--color-white);  --btn-shade: var(--shade-white); }
 
+/* ── Theme Toggle Switch ── */
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 4px;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover {
+    background: rgba(0,0,0,0.04);
+}
+
+.toggle-track {
+    width: 30px;
+    height: 14px;
+    background: #CBCCC6;
+    border-radius: 7px;
+    position: relative;
+    box-shadow:
+        inset 1px 1px 3px rgba(0,0,0,0.15),
+        inset -1px -1px 2px rgba(255,255,255,0.5);
+}
+
+.toggle-knob {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #F0F0EE, #D8D8D4);
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 1px 2px rgba(0,0,0,0.15),
+        inset 0 1px 1px rgba(255,255,255,0.5);
+}
+
+.toggle-knob::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+    background: #E8A000;
+    box-shadow: 0 0 4px rgba(232,160,0,0.4);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.toggle-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-label);
+    letter-spacing: 0.08em;
+    user-select: none;
+}
+
 /* ── Category Buttons ── */
 
 .category-section {
@@ -616,6 +688,158 @@ body {
 
 .screen-dot.active {
     animation: pulse 2s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════
+   DARK THEME
+   ══════════════════════════════════════ */
+
+html[data-theme="dark"] {
+    --casing-bg: #2C2D2A;
+    --casing-highlight: rgba(255,255,255,0.06);
+    --panel-gap-dark: rgba(0,0,0,0.4);
+    --panel-gap-light: rgba(255,255,255,0.06);
+    --text-main: #E5E5E1;
+    --text-muted: #999;
+    --text-label: #7A7B76;
+    --screen-bg: #141513;
+}
+
+html[data-theme="dark"] body {
+    background-color: #1A1B18;
+}
+
+/* Panel */
+html[data-theme="dark"] .device-panel {
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.45),
+        0 5px 15px rgba(0,0,0,0.25),
+        inset 1px 1px 2px rgba(255,255,255,0.06),
+        inset -1px -1px 3px rgba(0,0,0,0.3);
+}
+
+/* CRT Screen */
+html[data-theme="dark"] .display-screen {
+    box-shadow:
+        inset 2px 2px 12px rgba(0,0,0,0.7),
+        inset -1px -1px 4px rgba(255,255,255,0.02);
+}
+
+html[data-theme="dark"] .screen-label {
+    color: #555;
+}
+
+/* Hardware Buttons */
+html[data-theme="dark"] .btn-well {
+    background: #3A3B37;
+    box-shadow:
+        inset 2px 2px 4px rgba(0,0,0,0.3),
+        inset -2px -2px 4px rgba(255,255,255,0.03);
+}
+
+html[data-theme="dark"] .btn-cap {
+    box-shadow:
+        inset 0 2px 2px rgba(255,255,255,0.15),
+        inset 0 -1px 3px rgba(0,0,0,0.3),
+        0 5px 0 var(--btn-shade),
+        0 8px 8px rgba(0,0,0,0.45);
+}
+
+html[data-theme="dark"] .hardware-btn:active .btn-cap,
+html[data-theme="dark"] .hardware-btn.is-active .btn-cap {
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,0.1),
+        inset 0 -1px 2px rgba(0,0,0,0.4),
+        0 0 0 var(--btn-shade),
+        0 2px 3px rgba(0,0,0,0.25);
+}
+
+/* Category Buttons */
+html[data-theme="dark"] .category-btn {
+    background: #3A3B36;
+    color: #999;
+    border-color: rgba(0,0,0,0.25);
+    border-top-color: rgba(255,255,255,0.06);
+    border-left-color: rgba(255,255,255,0.06);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+html[data-theme="dark"] .category-btn:active {
+    background: #333330;
+    border-color: rgba(0,0,0,0.3);
+    border-bottom-color: rgba(255,255,255,0.04);
+    border-right-color: rgba(255,255,255,0.04);
+}
+
+html[data-theme="dark"] .category-btn.active {
+    background: #46463F;
+    color: var(--text-main);
+    border-color: rgba(0,0,0,0.3);
+    border-bottom-color: rgba(255,255,255,0.04);
+    border-right-color: rgba(255,255,255,0.04);
+}
+
+/* Feed Section */
+html[data-theme="dark"] .feed-section {
+    background: rgba(0,0,0,0.15);
+}
+
+/* News Cards */
+html[data-theme="dark"] .news-card {
+    background: #363632;
+    box-shadow:
+        1px 1px 4px rgba(0,0,0,0.25),
+        inset 1px 1px 0 rgba(255,255,255,0.03);
+}
+
+html[data-theme="dark"] .news-card:hover {
+    box-shadow:
+        2px 4px 12px rgba(0,0,0,0.35),
+        inset 1px 1px 0 rgba(255,255,255,0.03);
+}
+
+html[data-theme="dark"] .card-meta {
+    border-top-color: rgba(255,255,255,0.06);
+}
+
+html[data-theme="dark"] .card-fav-btn:hover {
+    background: rgba(255,255,255,0.06);
+}
+
+html[data-theme="dark"] .card-fav-btn .star-outline {
+    stroke: #555;
+}
+
+html[data-theme="dark"] .feed-empty {
+    background: #363632;
+    box-shadow:
+        1px 1px 4px rgba(0,0,0,0.25),
+        inset 1px 1px 0 rgba(255,255,255,0.03);
+}
+
+/* Theme Toggle – dark overrides */
+html[data-theme="dark"] .theme-toggle:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+html[data-theme="dark"] .toggle-track {
+    background: #444440;
+    box-shadow:
+        inset 1px 1px 3px rgba(0,0,0,0.35),
+        inset -1px -1px 2px rgba(255,255,255,0.03);
+}
+
+html[data-theme="dark"] .toggle-knob {
+    left: 17px;
+    background: linear-gradient(145deg, #8A8B86, #6A6B66);
+    box-shadow:
+        0 1px 2px rgba(0,0,0,0.35),
+        inset 0 1px 1px rgba(255,255,255,0.1);
+}
+
+html[data-theme="dark"] .toggle-knob::after {
+    background: #00CC88;
+    box-shadow: 0 0 5px rgba(0,204,136,0.5);
 }
 
 /* ── Responsive ── */
