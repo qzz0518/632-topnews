@@ -11,6 +11,19 @@ const REGIONS = {
   uk: { name: 'UK',   tag: 'UK', source: 'BBC',  api: '/api/bbc',     type: 'rss',     dotColor: 'var(--color-green)' },
 };
 
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+const PROD_URLS = {
+  cn: 'https://whyta.cn/api/toutiao?key=36de5db81215',
+  jp: 'https://www3.nhk.or.jp/rss/news/cat0.xml',
+  us: 'https://rss.cnn.com/rss/edition_world.rss',
+  uk: 'https://feeds.bbci.co.uk/news/world/rss.xml',
+};
+
+function getApiUrl(region) {
+  if (import.meta.env.DEV) return REGIONS[region].api;
+  return `${CORS_PROXY}${encodeURIComponent(PROD_URLS[region])}`;
+}
+
 const CATEGORY_KEYWORDS = {
   tech:          ['科技','技术','AI','人工智能','芯片','5G','软件','互联网','手机','tech','ai','robot','software','digital','cyber','quantum','semiconductor','internet','computer','data','chip','startup'],
   business:      ['财经','经济','金融','股市','投资','市值','贸易','GDP','economy','market','trade','finance','stock','bank','invest','inflation','rate','growth','fund','tax','business','deal','revenue'],
@@ -169,7 +182,7 @@ async function fetchAllNews() {
 
 async function fetchRegionNews(region) {
   const config = REGIONS[region];
-  const response = await fetch(config.api);
+  const response = await fetch(getApiUrl(region));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
   if (config.type === 'toutiao') {

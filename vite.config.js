@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/632-topnews/' : '/',
   server: {
     port: 5173,
     host: true,
@@ -27,4 +28,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));
