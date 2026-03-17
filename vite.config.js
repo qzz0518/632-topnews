@@ -6,25 +6,25 @@ export default defineConfig(({ command }) => ({
     port: 5173,
     host: true,
     proxy: {
-      '/api/toutiao': {
-        target: 'https://whyta.cn',
+      '/api/sina': {
+        target: 'https://feed.mix.sina.com.cn',
         changeOrigin: true,
-        rewrite: () => '/api/toutiao?key=36de5db81215',
+        rewrite: () => '/api/roll/get?pageid=153&lid=2509&k=&num=20&page=1',
       },
       '/api/nhk': {
         target: 'https://www3.nhk.or.jp',
         changeOrigin: true,
         rewrite: () => '/rss/news/cat0.xml',
       },
+      '/api/nyt': {
+        target: 'https://rss.nytimes.com',
+        changeOrigin: true,
+        rewrite: () => '/services/xml/rss/nyt/World.xml',
+      },
       '/api/bbc': {
         target: 'https://feeds.bbci.co.uk',
         changeOrigin: true,
         rewrite: () => '/news/world/rss.xml',
-      },
-      '/api/cnn': {
-        target: 'https://rss.cnn.com',
-        changeOrigin: true,
-        rewrite: () => '/rss/edition_world.rss',
       },
     },
   },

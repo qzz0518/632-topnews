@@ -5,23 +5,23 @@ import './style.css';
 // ============================================================
 
 const REGIONS = {
-  cn: { name: '中国', tag: 'CN', source: '头条', api: '/api/toutiao', type: 'toutiao', dotColor: 'var(--color-red)' },
-  jp: { name: '日本', tag: 'JP', source: 'NHK',  api: '/api/nhk',     type: 'rss',     dotColor: 'var(--color-blue)' },
-  us: { name: 'USA',  tag: 'US', source: 'CNN',  api: '/api/cnn',     type: 'rss',     dotColor: 'var(--color-yellow)' },
-  uk: { name: 'UK',   tag: 'UK', source: 'BBC',  api: '/api/bbc',     type: 'rss',     dotColor: 'var(--color-green)' },
+  cn: { name: '中国', tag: 'CN', source: '新浪', api: '/api/sina', type: 'sina',    dotColor: 'var(--color-red)' },
+  jp: { name: '日本', tag: 'JP', source: 'NHK',  api: '/api/nhk',  type: 'rss',     dotColor: 'var(--color-blue)' },
+  us: { name: 'USA',  tag: 'US', source: 'NYT',  api: '/api/nyt',  type: 'rss',     dotColor: 'var(--color-yellow)' },
+  uk: { name: 'UK',   tag: 'UK', source: 'BBC',  api: '/api/bbc',  type: 'rss',     dotColor: 'var(--color-green)' },
 };
 
-const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+const FAST_PROXY = 'https://corsproxy.io/?key=492fd778&url=';
 const PROD_URLS = {
-  cn: 'https://whyta.cn/api/toutiao?key=36de5db81215',
+  cn: `${FAST_PROXY}${encodeURIComponent('https://feed.mix.sina.com.cn/api/roll/get?pageid=153&lid=2509&k=&num=20&page=1')}`,
   jp: 'https://www3.nhk.or.jp/rss/news/cat0.xml',
-  us: 'https://rss.cnn.com/rss/edition_world.rss',
-  uk: 'https://feeds.bbci.co.uk/news/world/rss.xml',
+  us: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+  uk: `${FAST_PROXY}${encodeURIComponent('https://feeds.bbci.co.uk/news/world/rss.xml')}`,
 };
 
 function getApiUrl(region) {
   if (import.meta.env.DEV) return REGIONS[region].api;
-  return `${CORS_PROXY}${encodeURIComponent(PROD_URLS[region])}`;
+  return PROD_URLS[region];
 }
 
 const CATEGORY_KEYWORDS = {
@@ -49,12 +49,12 @@ const MOCK_NEWS = {
     { title: 'Shinkansen High-Speed Network Expansion Plans Announced', url: '#', source: 'Yomiuri' },
   ],
   us: [
-    { title: 'Federal Reserve Holds Rates Steady Amid Economic Uncertainty', url: '#', source: 'Reuters' },
-    { title: 'SpaceX Successfully Completes Historic Mars Mission Launch', url: '#', source: 'CNN' },
-    { title: 'US Tech Giants Report Stronger Than Expected Q1 Earnings', url: '#', source: 'WSJ' },
-    { title: 'New Comprehensive Climate Policy Framework Signed Into Law', url: '#', source: 'AP' },
-    { title: 'NBA Playoffs Heat Up With Surprising First-Round Upsets', url: '#', source: 'ESPN' },
-    { title: 'Silicon Valley Leads Global AI Investment Surge in 2026', url: '#', source: 'TechCrunch' },
+    { title: 'Federal Reserve Holds Rates Steady Amid Economic Uncertainty', url: '#', source: 'NYT' },
+    { title: 'SpaceX Successfully Completes Historic Mars Mission Launch', url: '#', source: 'NYT' },
+    { title: 'US Tech Giants Report Stronger Than Expected Q1 Earnings', url: '#', source: 'NYT' },
+    { title: 'New Comprehensive Climate Policy Framework Signed Into Law', url: '#', source: 'NYT' },
+    { title: 'NBA Playoffs Heat Up With Surprising First-Round Upsets', url: '#', source: 'NYT' },
+    { title: 'Silicon Valley Leads Global AI Investment Surge in 2026', url: '#', source: 'NYT' },
   ],
   uk: [
     { title: 'UK Parliament Passes Landmark Digital Safety and AI Bill', url: '#', source: 'BBC' },
@@ -185,17 +185,16 @@ async function fetchRegionNews(region) {
   const response = await fetch(getApiUrl(region));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-  if (config.type === 'toutiao') {
+  if (config.type === 'sina') {
     const data = await response.json();
-    if (data.code !== 200 || !Array.isArray(data.data)) throw new Error('Bad response');
-    return data.data.map(item => ({
+    if (!data.result || !data.result.data) throw new Error('Bad response');
+    return data.result.data.filter(item => item.title).map(item => ({
       id: `cn-${hashStr(item.title)}`,
       title: item.title,
       url: item.url || '#',
-      source: '头条',
+      source: item.media_name || '新浪',
       region: 'cn',
-      timestamp: item.timestamp ? parseInt(item.timestamp) / 1e6 : Date.now(),
-      hot: item.hot,
+      timestamp: item.ctime ? parseInt(item.ctime) * 1000 : Date.now(),
     }));
   }
 
@@ -391,7 +390,7 @@ function startProgressBar() {
   let pct = 0;
 
   const interval = setInterval(() => {
-    pct += 0.33;
+    pct += 0.033;
     bar.style.width = Math.min(pct, 100) + '%';
 
     if (pct >= 100) {
