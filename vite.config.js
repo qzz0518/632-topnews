@@ -1,7 +1,15 @@
 import { defineConfig } from 'vite';
 
+/** GitHub Pages is served under the repo path; Vercel and local preview use site root. */
+function productionBase(command) {
+  if (command !== 'build') return '/';
+  if (process.env.VERCEL) return '/';
+  if (process.env.GITHUB_ACTIONS) return '/632-topnews/';
+  return '/';
+}
+
 export default defineConfig(({ command }) => ({
-  base: command === 'build' ? '/632-topnews/' : '/',
+  base: productionBase(command),
   server: {
     port: 5173,
     host: true,
